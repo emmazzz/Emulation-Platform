@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unitd.h>
 #include <fstream>
 #include <sstream>
@@ -42,7 +43,8 @@ class Controller{
     void RequestDecision(string User_ID, float Timestamp,UserFeature* Features,
                          std::vector<Decision> Potential_Decision_Vector);
     void ReceiveDecision(string User_ID, float Timestamp, Decision *Decision);
-    void ListenToUser(string User_ID);
+    void Init();
+    int ListenToUser(string User_ID);
 };
 
 
