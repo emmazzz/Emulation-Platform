@@ -22,7 +22,7 @@ void Controller::ReceiveDecision(char *User_ID, float Timestamp, Decision *Decis
 
 
 
-int ListenToUser(){
+int Controller::ListenToUser(){
 
 	// start listening to user
 	int socketfd, connfd, portno;
@@ -81,6 +81,5 @@ int ListenToUser(){
   
     
     close(sockfd);
-    return 0; 
     return 0; 
 };

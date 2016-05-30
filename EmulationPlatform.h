@@ -43,8 +43,7 @@ class Controller{
     void RequestDecision(string User_ID, float Timestamp,UserFeature* Features,
                          std::vector<Decision> Potential_Decision_Vector);
     void ReceiveDecision(string User_ID, float Timestamp, Decision *Decision);
-    void Init();
-    int ListenToUser(string User_ID);
+    void ListenToUser();
 };
 
 
