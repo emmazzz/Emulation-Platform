@@ -14,11 +14,11 @@
 float TIMEPERIOD = 1.0;
 
 class Decision{
-
+	int bitRate
 };
 
 class Quality{
-
+	int quality;
 };
 
 class UserFeature{
@@ -40,9 +40,7 @@ class Controller{
     	                  UserFeature* Features,
     	                  Decision *Decision,
     	                  std::vector<Quality> QualityVector);
-    void RequestDecision(string User_ID, float Timestamp,UserFeature* Features,
-                         std::vector<Decision> Potential_Decision_Vector);
-    void ReceiveDecision(string User_ID, float Timestamp, Decision *Decision);
+   
     void ListenToUser();
 };
 
@@ -63,7 +61,6 @@ class User{
 	float TimePeriod;
 	Decision *Decision;
     void ConnectToController();
-    void GetDecision();
 };
 
 class QualityEvaluator{
@@ -72,12 +69,17 @@ class QualityEvaluator{
     	                   Decision *Decision);
 };
 class EmulationScheduler{
-
+	Controller *Controller;
+	Pattern *Pattern;
+	Decision *Default;
+	void Init();
+	void Routine();
+	void RequestDecision(string User_ID, float Timestamp,UserFeature* Features,
+                         std::vector<Decision> Potential_Decision_Vector);
+    void ReceiveDecision(string User_ID, float Timestamp, Decision *Decision);
 };
 
 class EmulationPlatform{
-	Controller *Controller;
-	Pattern *Pattern;
 	QualityEvaluator *Evaluator;
 	EmulationScheduler *Scheduler;
 };

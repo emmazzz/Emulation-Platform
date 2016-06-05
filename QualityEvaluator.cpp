@@ -5,5 +5,7 @@ Quality QualityEvaluator::EvaluateQuality(string User_ID, float Timestamp,
     	                   Decision *Decision)
 {
 	// TODO
-	
+	Quality Q = new Quality();
+	Q.quality = 1;
+	return Q
 };

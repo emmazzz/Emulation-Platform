@@ -10,18 +10,6 @@ Quality Controller::UpdateQuality(char *User_ID,
 
 };
     
-void Controller::RequestDecision(char *User_ID, float Timestamp,UserFeature* Features,
-                         std::vector<Decision> Potential_Decision_Vector)
-{
-
-};
-    
-void Controller::ReceiveDecision(char *User_ID, float Timestamp, Decision *Decision){
-
-};
-
-
-
 int Controller::ListenToUser(){
 
 	// start listening to user
@@ -32,8 +20,7 @@ int Controller::ListenToUser(){
 
     char buffer[256];
     
-    // create a socket
-    socketfd =  socket(AF_INET, SOCK_STREAM, 0);
+    
 
 	// TODO: how to get portno??
     int portno; 
@@ -45,6 +32,12 @@ int Controller::ListenToUser(){
     bind(socketfd, &ctrl_addr,sizeof(ctrl_addr));
 
     while(true){
+
+    	// listen to user
+
+    	// create a socket
+    	socketfd =  socket(AF_INET, SOCK_STREAM, 0);
+    	
     	listen(socketfd,MAX_QUEUE_SIZE);
 
     	userlen = sizeof(user_addr);
@@ -56,17 +49,15 @@ int Controller::ListenToUser(){
         	error("acception error");
 
     	printf("Controller: connection from %s port %d\n",
-          	inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
+          	inet_ntoa(user_addr.sin_addr), ntohs(user_addr.sin_port));
     	
     	n = read(connfd,buffer,255);
     	
     	if (n < 0) error("can't read from user");
 
     	// TODO
-    	// how to write these functions??
     	info = ParseInfo(buffer);
-    	RequestDecision();
-    	ReceiveDecision();
+    	
     	UpdateQuality();
     	
     	// clear buffer    	
