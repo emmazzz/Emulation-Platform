@@ -1,8 +1,8 @@
 #include "EmulationPlatform.h"
 
-string User::CompactInfo()
+void User::CompactInfo(char *buffer)
 {
-
+    strcpy(buffer,User_ID);
 };
 
 bool User::ConnectToController(){
@@ -29,7 +29,7 @@ bool User::ConnectToController(){
     ctrl_addr.sin_port = htons(portno);
     connect(socketfd, (struct sockaddr *) &ctrl_addr, sizeof(ctrl_addr)); 
 
-    buffer = CompactInfo();
+    CompactInfo(buffer);
 
     n = write(socketfd, buffer, strlen(buffer));
 

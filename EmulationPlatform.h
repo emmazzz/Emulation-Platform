@@ -57,7 +57,8 @@ class Pattern{
 
 class User{
 	string User_ID;
-	float Timestamp;
+	std::vector<float> Timestamps;
+	float CurTime
 	float TimePeriod;
 	Decision *Decision;
     void ConnectToController();

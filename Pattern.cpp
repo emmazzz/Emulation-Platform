@@ -28,12 +28,12 @@ void Pattern::Init()
     	if (!GetUserByID(feature->User_ID)){
     		User *user = new User();
         	user->User_ID = feature->User_ID;
-        	user->Timestamp = feature->Timestamp;
+        	user->Timestamps.push_back(feature->Timestamp);
         	user->TimePeriod = TIMEPERIOD;
         	UserList.push_back(user);
     	} else{
     		// TODO
-    		// update timestamp??
+    		user->Timestamps.push_back(feature->Timestamp);
     	}
         
     }

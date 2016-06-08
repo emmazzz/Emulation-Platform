@@ -1,7 +1,7 @@
 #include "EmulationPlatform.h"
 #define MAX_QUEUE_SIZE 200
 
-Quality Controller::UpdateQuality(char *User_ID, 
+Quality Controller::UpdateQuality(string User_ID, 
     	                  float Timestamp, 
     	                  UserFeature* Features,
     	                  Decision *Decision,
