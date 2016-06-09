@@ -2,7 +2,8 @@
 
 void User::CompactInfo(char *buffer)
 {
-    strcpy(buffer,User_ID);
+    snprintf(buffer, sizeof(buffer), "%s %f", User_ID, CurTime);
+
 };
 
 bool User::ConnectToController(){
