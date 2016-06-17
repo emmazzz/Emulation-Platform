@@ -1,10 +1,10 @@
 #include "EmulationPlatform.h"
 
-void User::CompactInfo(char *buffer)
-{
-    snprintf(buffer, sizeof(buffer), "%s %f", User_ID, CurTime);
+// void User::CompactInfo(char *buffer)
+// {
+//     snprintf(buffer, sizeof(buffer), "%s %f", User_ID, CurTime);
 
-};
+// };
 
 bool User::ConnectToController(){
 	int socketfd, portno, n;
@@ -30,7 +30,9 @@ bool User::ConnectToController(){
     ctrl_addr.sin_port = htons(portno);
     connect(socketfd, (struct sockaddr *) &ctrl_addr, sizeof(ctrl_addr)); 
 
-    CompactInfo(buffer);
+    std::size_t length = User_ID.copy(buffer,0,User_ID.length());
+    buffer[length]='\0';
+    // CompactInfo(buffer);
 
     n = write(socketfd, buffer, strlen(buffer));
 
@@ -44,10 +46,10 @@ bool User::ConnectToController(){
 
     close(socketfd);
     return true;
-};
+}
     
 
-void User::Routine(){
+int main(){
 
 
 	// start listening to EmulationScheduler
