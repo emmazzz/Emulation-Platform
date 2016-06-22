@@ -21,19 +21,18 @@ void Controller::ListenToUser(){
 
     char buffer[256];
     
-    
+    socketfd =  socket(AF_INET, SOCK_STREAM, 0);
 
-	// TODO: how to get portno??
     portno = 80; 
+    memset(&ctrl_addr, 0, sizeof(struct sockaddr_in));
     ctrl_addr.sin_family = AF_INET;  
     ctrl_addr.sin_addr.s_addr = INADDR_ANY;  
     ctrl_addr.sin_port = htons(portno);
 
     // bind the socket to IP address on portno
-    socketfd =  socket(AF_INET, SOCK_STREAM, 0);
 
     bind(socketfd, (struct sockaddr *)&ctrl_addr,sizeof(ctrl_addr));
-
+    printf("%d\n", socketfd);
     while(true){
 
     	// listen to user
@@ -62,7 +61,8 @@ void Controller::ListenToUser(){
             printf("%s\n","can't read from user");
             break;
         }
-
+        buffer[n] = 0;
+        printf("Controller received: %s\n", buffer);
     	// TODO
     	// info = ParseInfo(buffer);
     	
@@ -73,6 +73,7 @@ void Controller::ListenToUser(){
 
     	// TODO
     	// send dicision
+        write(connfd,"Hi!\n",4);
     	// send(connfd, (void *)decision, sizeof(decision),portno);
 
     	close(connfd);

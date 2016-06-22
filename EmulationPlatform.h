@@ -13,7 +13,7 @@
 #include <netdb.h>
 #include <algorithm>
 
-float TIMEPERIOD = 1.0;
+// float TIMEPERIOD = 1.0;
 
 class Decision{
 public:
@@ -80,30 +80,29 @@ public:
 
 
 
-// class QualityEvaluator{
-// public:
+class QualityEvaluator{
+public:
 
-//     Quality EvaluateQuality(std::string User_ID, float Timestamp,
-//     	                   std::vector<UserFeature> Client_Feature_Vector,
-//     	                   Decision *Decision);
-// };
-// class EmulationScheduler{
-// public:
+    Quality EvaluateQuality(std::string User_ID, float Timestamp,
+    	                   std::vector<UserFeature> Client_Feature_Vector,
+    	                   Decision *Decision);
+};
+class EmulationScheduler{
+public:
 
-// 	Controller *Controller;
-// 	Pattern *Pattern;
-// 	Decision *Default;
-// 	void Init();
-// 	void Routine();
-// 	void RequestDecision(std::string User_ID, float Timestamp,UserFeature* Features,
-//                          std::vector<Decision> Potential_Decision_Vector);
-//     void ReceiveDecision(std::string User_ID, float Timestamp, Decision *Decision);
-// };
+	Controller *controller;
+	Pattern *pattern;
+	Decision *Default;
+	void Init();
+	void Routine();
+	void RequestDecision(std::string User_ID, float Timestamp,UserFeature* Features,
+                         std::vector<Decision> Potential_Decision_Vector);
+    void ReceiveDecision(std::string User_ID, float Timestamp, Decision *Decision);
+};
 
-// class EmulationPlatform{
-// public:
+class EmulationPlatform{
+public:
 
-// 	QualityEvaluator *Evaluator;
-// 	EmulationScheduler *Scheduler;
-// };
+	
+};
 

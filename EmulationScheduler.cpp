@@ -1,19 +1,20 @@
 #include "EmulationPlatform.h"
 
-void Init()
+void EmulationScheduler::Init()
 {
-	Pattern->init();
+	pattern = new Pattern();
+	pattern->Init();
 };
 	
-void Routine()
+void EmulationScheduler::Routine()
 {
 	for (std::vector<User>::iterator user = 
-    	Pattern->UserList.begin();feature != Pattern->UserList.end();++user)
+    	pattern->UserList.begin();user != pattern->UserList.end();++user)
     {
-    	for (std::vector<float> t = user->Timestamps.begin();
+    	for (std::vector<float>::iterator t = user->Timestamps.begin();
     		t != user->Timestamps.end();++t)
     	{
-    		user->CurTime = t;
+    		user->CurTime = *t;
     		user->ConnectToController();
     	}
         
@@ -21,13 +22,13 @@ void Routine()
 
 };
 	
-void RequestDecision(string User_ID, float Timestamp,UserFeature* Features,
-                         std::vector<Decision> Potential_Decision_Vector)
-{
+// void RequestDecision(std::string User_ID, float Timestamp,UserFeature* Features,
+//                          std::vector<Decision> Potential_Decision_Vector)
+// {
 
-};
+// };
     
-void ReceiveDecision(string User_ID, float Timestamp, Decision *Decision)
-{
+// void ReceiveDecision(std::string User_ID, float Timestamp, Decision *Decision)
+// {
 	
-};
+// };

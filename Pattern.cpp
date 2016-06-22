@@ -32,7 +32,7 @@ void Pattern::Init()
     	if (!GetUserByID(feature->User_ID,user)){
         	user->User_ID = feature->User_ID;
         	user->Timestamps.push_back(feature->Timestamp);
-        	user->TimePeriod = TIMEPERIOD;
+        	user->TimePeriod = 0.1;
         	UserList.push_back(*user);
     	} else{
     		// TODO
@@ -61,12 +61,6 @@ bool Pattern::GetUserByID(std::string User_ID, User *user)
 	return false;
 }
 
-int main(){
-	Pattern *p = new Pattern();
-	p->Init();
-	std::cout << "Hello" << "World!\n";
-	return 0;
-}
 
 
 

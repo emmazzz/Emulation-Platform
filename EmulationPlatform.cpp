@@ -1,12 +1,11 @@
 #include "EmulationPlatform.h"
 
-void doit()
+int main()
 {
-	Scheduler = new EmulationScheduler();
-	Evaluator = new QualityEvaluator();
-	Scheduler->init();
-	Scheduler->Controller->ListenToUser();
+	EmulationScheduler *Scheduler = new EmulationScheduler();
+	QualityEvaluator *Evaluator = new QualityEvaluator();
+	Scheduler->Init();
 	Scheduler->Routine();
-	
+	return 1;
 
 }
