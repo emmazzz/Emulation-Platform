@@ -1,6 +1,11 @@
 #include "EmulationPlatform.h"
 
-int main(){
+void error(const char *err){
+    perror(err);
+    exit(0);
+}
+
+int main(int argc, char *argv[]){
 
 
 	// start listening to EmulationScheduler
@@ -8,7 +13,7 @@ int main(){
 	int socketfd, connfd, portno;
     struct sockaddr_in user_addr, sched_addr;
     int n;
-
+    char *host = argv[1];
     char buffer[256];
 
     int MAX_QUEUE_SIZE = 5;
@@ -16,25 +21,23 @@ int main(){
     
 
 	// TODO: how to get portno??
-    portno = 80; 
+    portno = atoi(argv[2]); 
     user_addr.sin_family = AF_INET;  
     user_addr.sin_addr.s_addr = INADDR_ANY;  
     user_addr.sin_port = htons(portno);
+
+    // create a socket
+    socketfd =  socket(AF_INET, SOCK_STREAM, 0);
 
     // bind the socket to IP address on portno
     bind(socketfd, (struct sockaddr *)&user_addr,sizeof(user_addr));
 
     printf("%d\n", socketfd);
-    
-    // u->ConnectToController();
 
 
     while(true){
 
-    	// listen to scheduler
-    	// create a socket
-    	socketfd =  socket(AF_INET, SOCK_STREAM, 0);
-    	
+    	// listen to scheduler 	
     	listen(socketfd,MAX_QUEUE_SIZE);
 
     	socklen_t schedlen = sizeof(sched_addr);
@@ -56,8 +59,9 @@ int main(){
         }
 
     	// connect to controller and update quality
-		// u->ConnectToController();
+		u->ConnectToController(host, portno, buffer);
 
+        n = write(connfd, buffer, 255);
 
     	close(connfd);
     }

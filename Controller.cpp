@@ -10,10 +10,10 @@ void Controller::UpdateQuality(std::string User_ID,
 
 }
     
-void Controller::ListenToUser(){
+void Controller::ListenToUser(int portno){
 
 	// start listening to user
-	int socketfd, connfd, portno;
+	int socketfd, connfd;
     socklen_t userlen;
     struct sockaddr_in ctrl_addr, user_addr;
     // char *decision;
@@ -22,16 +22,23 @@ void Controller::ListenToUser(){
     char buffer[256];
     
     socketfd =  socket(AF_INET, SOCK_STREAM, 0);
+    if (socketfd < 0){
+        perror("socket error");
+        exit(0);
+    }
 
-    portno = 80; 
     memset(&ctrl_addr, 0, sizeof(struct sockaddr_in));
+
     ctrl_addr.sin_family = AF_INET;  
     ctrl_addr.sin_addr.s_addr = INADDR_ANY;  
     ctrl_addr.sin_port = htons(portno);
 
     // bind the socket to IP address on portno
 
-    bind(socketfd, (struct sockaddr *)&ctrl_addr,sizeof(ctrl_addr));
+    if (bind(socketfd, (struct sockaddr *)&ctrl_addr,sizeof(ctrl_addr)) < 0){
+        perror("error binding");
+        exit(0);
+    }
     printf("%d\n", socketfd);
     while(true){
 
@@ -47,8 +54,8 @@ void Controller::ListenToUser(){
 
     	// printf("Controller: connection from %s port %d\n",inet_ntoa(user_addr.sin_addr), ntohs(user_addr.sin_port));
     	if (connfd < 0){
-        	printf("%s\n", "acception error");
-            break;
+        	perror("acception error");
+            exit(0);
         }
     	printf("Controller: connection from %s port %d\n",
           	inet_ntoa(user_addr.sin_addr), ntohs(user_addr.sin_port));
@@ -84,8 +91,9 @@ void Controller::ListenToUser(){
     // return 0; 
 }
 
-int main(){
+int main(int argc, char *argv[]){
     Controller *c = new Controller();
-    c->ListenToUser();
+    int portno = atoi(argv[1]);
+    c->ListenToUser(portno);
     return 0;
 }

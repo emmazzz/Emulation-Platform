@@ -52,7 +52,7 @@ public:
     	                  Decision *Decision,
     	                  std::vector<Quality> QualityVector);
    
-    void ListenToUser();
+    void ListenToUser(int portno);
 };
 
 class User{
@@ -63,7 +63,7 @@ public:
 	float TimePeriod;
 	Decision *Decision;
 	// void CompactInfo(char *buffer);
-    bool ConnectToController();
+    bool ConnectToController(char *host, int portno, char *buffer);
 };
 
 class Pattern{
@@ -74,7 +74,7 @@ public:
 	std::vector<SystemEvent> EventList;
 	void GetUserRequests();
 	void GetSystemEvents();
-	void Init();
+	void InitPattern();
 	bool GetUserByID(std::string User_ID, User *user);
 };
 
@@ -87,17 +87,15 @@ public:
     	                   std::vector<UserFeature> Client_Feature_Vector,
     	                   Decision *Decision);
 };
+
 class EmulationScheduler{
 public:
-
 	Controller *controller;
 	Pattern *pattern;
 	Decision *Default;
 	void Init();
-	void Routine();
-	void RequestDecision(std::string User_ID, float Timestamp,UserFeature* Features,
-                         std::vector<Decision> Potential_Decision_Vector);
-    void ReceiveDecision(std::string User_ID, float Timestamp, Decision *Decision);
+	void Routine(int portno, char *host);
+	void RequestDecision(std::string User_ID, float Timestamp, int portno, char *host);
 };
 
 class EmulationPlatform{
