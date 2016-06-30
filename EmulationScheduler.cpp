@@ -63,17 +63,14 @@ void EmulationScheduler::RequestDecision(std::string User_ID, float Timestamp, s
 
     printf("%s\n", "Connected!");
 
-    // std::size_t length = User_ID.copy(buffer,0,User_ID.length());
     int length = snprintf(buffer, sizeof(buffer), "%s %f %s", User_ID.c_str(), Timestamp, CDN.c_str());
     buffer[length]='\0';
     printf("%d\n", length);
-    // CompactInfo(buffer);
 
     n = write(socketfd, buffer, strlen(buffer));
 
     if (n < 0) {
         printf("cannot write\n");
-        // return false;
     }
 
     printf("Message '%s' sent\n", buffer);
@@ -82,7 +79,6 @@ void EmulationScheduler::RequestDecision(std::string User_ID, float Timestamp, s
 
     n = read(socketfd,buffer,255);
 
-    // if (n < 0) return false;
 
     printf("Received : %s\n", buffer);
 

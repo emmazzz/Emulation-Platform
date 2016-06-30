@@ -43,19 +43,12 @@ bool User::ConnectToController(char *host, int portno, char *buffer){
     }
 
     printf("%s\n", "Connected!");
-    // User_ID = "Matt";
-    // printf("%s\n", User_ID.c_str());
-    // std::size_t length = User_ID.copy(buffer,0,User_ID.length());
-    // int length = snprintf(buffer, sizeof(buffer), "%s %f", User_ID.c_str(), CurTime);
-    // buffer[length]='\0';
-    // printf("%d\n", length);
-    // CompactInfo(buffer);
+
 
     n = write(socketfd, buffer, strlen(buffer));
 
     if (n < 0) {
         printf("cannot write\n");
-        // return false;
     }
 
     printf("Message '%s' sent\n", buffer);
@@ -64,7 +57,6 @@ bool User::ConnectToController(char *host, int portno, char *buffer){
 
     n = read(socketfd,buffer,255);
 
-    // if (n < 0) return false;
 
     printf("Received : %s\n", buffer);
 

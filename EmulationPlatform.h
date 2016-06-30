@@ -63,7 +63,6 @@ public:
 	float CurTime;
 	float TimePeriod;
 	Decision *Decision;
-	// void CompactInfo(char *buffer);
     bool ConnectToController(char *host, int portno, char *buffer);
 };
 

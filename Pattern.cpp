@@ -39,7 +39,6 @@ void Pattern::InitPattern()
         	user->CDN = feature->CDN;
         	UserList.push_back(*user);
     	} else{
-    		// TODO
     		user->Timestamps.push_back(feature->Timestamp);
     	}
         

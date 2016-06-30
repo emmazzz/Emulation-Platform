@@ -83,7 +83,6 @@ void Controller::ListenToUser(int portno){
   
     
     close(socketfd);
-    // return 0; 
 }
 
 int main(int argc, char *argv[]){
