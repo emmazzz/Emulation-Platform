@@ -58,6 +58,7 @@ public:
 class User{
 public:
 	std::string User_ID;
+	std::string CDN;
 	std::vector<float> Timestamps;
 	float CurTime;
 	float TimePeriod;
@@ -95,7 +96,7 @@ public:
 	Decision *Default;
 	void Init();
 	void Routine(int portno, char *host);
-	void RequestDecision(std::string User_ID, float Timestamp, int portno, char *host);
+	void RequestDecision(std::string User_ID, float Timestamp, std::string CDN,int portno, char *host);
 };
 
 class EmulationPlatform{

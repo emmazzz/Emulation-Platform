@@ -14,7 +14,7 @@ void EmulationScheduler::Routine(int portno, char *host)
     	for (std::vector<float>::iterator t = user->Timestamps.begin();
     		t != user->Timestamps.end();++t)
     	{
-    		RequestDecision(user->User_ID, user->CurTime, portno,host);
+    		RequestDecision(user->User_ID, user->CurTime, user->CDN, portno,host);
 
     	}
         
@@ -22,7 +22,7 @@ void EmulationScheduler::Routine(int portno, char *host)
 
 };
 	
-void EmulationScheduler::RequestDecision(std::string User_ID, float Timestamp, int portno, char *host)
+void EmulationScheduler::RequestDecision(std::string User_ID, float Timestamp, std::string CDN, int portno, char *host)
 {
 	int socketfd, n,userlen;
     struct sockaddr_in user_addr;
@@ -64,7 +64,7 @@ void EmulationScheduler::RequestDecision(std::string User_ID, float Timestamp, i
     printf("%s\n", "Connected!");
 
     // std::size_t length = User_ID.copy(buffer,0,User_ID.length());
-    int length = snprintf(buffer, sizeof(buffer), "%s %f", User_ID.c_str(), Timestamp);
+    int length = snprintf(buffer, sizeof(buffer), "%s %f %s", User_ID.c_str(), Timestamp, CDN.c_str());
     buffer[length]='\0';
     printf("%d\n", length);
     // CompactInfo(buffer);

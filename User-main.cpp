@@ -20,7 +20,6 @@ int main(int argc, char *argv[]){
     
     
 
-	// TODO: how to get portno??
     portno = atoi(argv[2]); 
     user_addr.sin_family = AF_INET;  
     user_addr.sin_addr.s_addr = INADDR_ANY;  
@@ -59,7 +58,7 @@ int main(int argc, char *argv[]){
         }
 
     	// connect to controller and update quality
-		u->ConnectToController(host, portno, buffer);
+		u->ConnectToController(host, portno+1, buffer);
 
         n = write(connfd, buffer, 255);
 

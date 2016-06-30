@@ -5,15 +5,11 @@ void Pattern::GetUserRequests()
 	// TODO
 	// parse user requests to RequestList from command line arguments?
 	UserFeature *r1 = new UserFeature();
-	UserFeature *r2 = new UserFeature();
 	r1->User_ID = "Emma";
-	r1->Timestamp = 0.7;
-	r2->User_ID = "Emma";
-	r2->Timestamp = 1.3;
+	r1->Timestamp = 0;
+	r1->CDN = "Akamai";
 	this->RequestList.push_back(*r1);
-	this->RequestList.push_back(*r2);
 	printf("User requests received\n");
-	// RequestList = {};
 }
 	
 void Pattern::GetSystemEvents()
@@ -40,6 +36,7 @@ void Pattern::InitPattern()
         	user->User_ID = feature->User_ID;
         	user->Timestamps.push_back(feature->Timestamp);
         	user->TimePeriod = 0.1;
+        	user->CDN = feature->CDN;
         	UserList.push_back(*user);
     	} else{
     		// TODO
