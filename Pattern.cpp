@@ -12,7 +12,7 @@ void Pattern::GetUserRequests(char *t)
 	float timestamp;
 
 	FILE *trace = fopen(t,"r");
-	printf("hey\n");
+	// printf("hey\n");
 	if (trace == NULL) {
 		fprintf(stderr,"wrong file!\n");
 		exit(0);
@@ -22,7 +22,7 @@ void Pattern::GetUserRequests(char *t)
 
 	while (fscanf(trace, " %s %f %s", ID,&timestamp, CDN) > 0){
 		UserFeature *r1 = new UserFeature();
-		printf("Feature: %s %f %s\n",ID, timestamp,CDN);
+		// printf("Feature: %s %f %s\n",ID, timestamp,CDN);
 		r1->User_ID = ID;
 		r1->Timestamp = timestamp;
 		r1->CDN = CDN;

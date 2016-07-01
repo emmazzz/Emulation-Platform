@@ -49,8 +49,9 @@ int main(int argc, char *argv[]){
 
     	printf("User: connection from %s port %d\n",
           	inet_ntoa(sched_addr.sin_addr), ntohs(sched_addr.sin_port));
-    	
+    	bzero(buffer,256);
     	n = read(connfd,buffer,255);
+
     	
     	if (n < 0) {
             printf("%s\n","can't read from scheduler");

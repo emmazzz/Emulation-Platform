@@ -45,7 +45,7 @@ bool User::ConnectToController(char *host, int portno, char *buffer){
     printf("%s\n", "Connected!");
 
 
-    n = write(socketfd, buffer, strlen(buffer));
+    n = write(socketfd, buffer, 255);
 
     if (n < 0) {
         printf("cannot write\n");

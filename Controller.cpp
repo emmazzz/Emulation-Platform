@@ -70,7 +70,7 @@ void Controller::ListenToUser(int portno){
         if (strncmp(q, msg, strlen(q)) == 0){
             bzero(buffer,256);
             bzero(msg,256);
-            write(connfd,"Quality score received!\n",24);
+            write(connfd,"Quality score received!\n",255);
             close(connfd);
             continue;
         }
@@ -81,7 +81,7 @@ void Controller::ListenToUser(int portno){
 
     	
     	// send dicision
-        write(connfd,buffer,sizeof(buffer));
+        write(connfd,buffer,256);
 
         // clear buffer     
         bzero(buffer,256);

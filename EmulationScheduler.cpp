@@ -17,7 +17,7 @@ void EmulationScheduler::Routine(int portno, char *host)
     		t != user->Timestamps.end();++t)
     	{
             user->CurTime = *t;
-            printf("user is %s\n",user->User_ID.c_str() );
+            // printf("user is %s\n",user->User_ID.c_str() );
     		RequestDecision(&(*user), portno,host);
     	}
         
@@ -60,7 +60,7 @@ void EmulationScheduler::RequestDecision(User *u, int portno, char *host)
 
     user_addr.sin_port = htons(portno);
 
-        printf("%s\n", User_ID);
+        // printf("%s\n", User_ID);
 
     if (connect(socketfd, (struct sockaddr *) &user_addr, sizeof(user_addr)) < 0){
         perror("error connecting");
@@ -69,10 +69,9 @@ void EmulationScheduler::RequestDecision(User *u, int portno, char *host)
     }
 
     printf("%s\n", "Connected!");
-
+    bzero(buffer,256);
     int length = snprintf(buffer, sizeof(buffer), "%s %f %s", User_ID, Timestamp, CDN);
     buffer[length]='\0';
-    printf("%d\n", length);
 
     // write to user
 
@@ -93,7 +92,7 @@ void EmulationScheduler::RequestDecision(User *u, int portno, char *host)
 
     n=sscanf(buffer, "%f %s",&Timestamp,CDN);
 
-
+    bzero(buffer,256);
     UserFeature *decision = new UserFeature();
     decision->User_ID = User_ID;
     decision->Timestamp = Timestamp;
