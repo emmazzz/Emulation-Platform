@@ -6,10 +6,11 @@ int main(int argc, char *argv[])
 	char *host = argv[1];
 
 	printf("%s %d\n",host,portno );
-
 	EmulationScheduler *Scheduler = new EmulationScheduler();
+	char *t = argv[3];
+	Scheduler->Init(t);
 
-	Scheduler->Init();
+	
 
 	Scheduler->Routine(portno,host);
 

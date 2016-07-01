@@ -17,6 +17,6 @@ g++ -o ctrl Controller.cpp
 Platform:
 ```
 g++ -o platform EmulationPlatform.cpp EmulationScheduler.cpp Pattern.cpp
-./platform localhost userportno
+./platform localhost userportno trace.txt
 ```
 

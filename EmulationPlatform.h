@@ -75,10 +75,10 @@ public:
 	std::vector<User> UserList;
 	std::vector<UserFeature> RequestList;
 	std::vector<SystemEvent> EventList;
-	void GetUserRequests();
+	void GetUserRequests(char *t);
 	void GetSystemEvents();
-	void InitPattern();
-	bool GetUserByID(std::string User_ID, User *user);
+	void InitPattern(char *t);
+	bool GetUserByID(std::string User_ID, float t);
 };
 
 
@@ -96,7 +96,7 @@ public:
 	Decision *Default;
 	std::vector<UserFeature> DecisionList;
 	QualityEvaluator *Evaluator;
-	void Init();
+	void Init(char *t);
 	void Routine(int portno, char *host);
 	void RequestDecision(User *user,int portno, char *host);
 };

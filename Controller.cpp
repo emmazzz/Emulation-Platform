@@ -75,7 +75,7 @@ void Controller::ListenToUser(int portno){
             continue;
         }
         printf("Controller received: %s\n", msg);
-    	
+    	bzero(buffer,256);
     	// UpdateQuality();
     	sprintf(buffer, "Decision CDN: %s", msg);
 

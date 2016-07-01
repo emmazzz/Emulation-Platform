@@ -1,9 +1,9 @@
 #include "EmulationPlatform.h"
 
-void EmulationScheduler::Init()
+void EmulationScheduler::Init(char *t)
 {
 	pattern = new Pattern();
-	pattern->InitPattern();
+	pattern->InitPattern(t);
 	Evaluator = new QualityEvaluator();
 
 };
@@ -16,8 +16,9 @@ void EmulationScheduler::Routine(int portno, char *host)
     	for (std::vector<float>::iterator t = user->Timestamps.begin();
     		t != user->Timestamps.end();++t)
     	{
+            user->CurTime = *t;
+            printf("user is %s\n",user->User_ID.c_str() );
     		RequestDecision(&(*user), portno,host);
-
     	}
         
     }
