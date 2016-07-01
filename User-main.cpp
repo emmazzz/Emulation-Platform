@@ -60,7 +60,17 @@ int main(int argc, char *argv[]){
     	// connect to controller and update quality
 		u->ConnectToController(host, portno+1, buffer);
 
+        // write the decision to scheduler
         n = write(connfd, buffer, 255);
+
+        bzero(buffer,256);
+
+        // read quality score from scheduler
+        n = read(connfd, buffer, 255);
+
+
+        // inform controller the quality score
+        u->ConnectToController(host, portno+1,buffer);
 
     	close(connfd);
     }

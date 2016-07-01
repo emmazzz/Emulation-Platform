@@ -18,22 +18,25 @@
 class Decision{
 public:
 
+	char *CDN;
 	int bitRate;
+	float Timestamp;
 };
 
 class Quality{
 public:
 
-	int quality;
+	int score;
 };
 
 class UserFeature{
 public:
 	std::string User_ID;
-	float Timestamp;
 	std::string CDN;
 	std::string Device;
 	std::string Site;
+	float Timestamp;
+	int bitRate;
 };
 
 class SystemEvent{
@@ -83,9 +86,7 @@ public:
 class QualityEvaluator{
 public:
 
-    Quality EvaluateQuality(std::string User_ID, float Timestamp,
-    	                   std::vector<UserFeature> Client_Feature_Vector,
-    	                   Decision *Decision);
+    Quality *EvaluateQuality(UserFeature *Decision);
 };
 
 class EmulationScheduler{
@@ -93,9 +94,11 @@ public:
 	Controller *controller;
 	Pattern *pattern;
 	Decision *Default;
+	std::vector<UserFeature> DecisionList;
+	QualityEvaluator *Evaluator;
 	void Init();
 	void Routine(int portno, char *host);
-	void RequestDecision(std::string User_ID, float Timestamp, std::string CDN,int portno, char *host);
+	void RequestDecision(User *user,int portno, char *host);
 };
 
 class EmulationPlatform{

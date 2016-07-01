@@ -1,11 +1,9 @@
 #include "EmulationPlatform.h"
 
-Quality QualityEvaluator::EvaluateQuality(string User_ID, float Timestamp,
-    	                   std::vector<UserFeature> Client_Feature_Vector,
-    	                   Decision *Decision)
+Quality *QualityEvaluator::EvaluateQuality(UserFeature *decision)
 {
 	// TODO
-	Quality Q = new Quality();
-	Q.quality = 1;
-	return Q
+	Quality *Q = new Quality();
+	Q->score = 1;
+	return Q;
 };

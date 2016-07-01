@@ -9,13 +9,11 @@ int main(int argc, char *argv[])
 
 	EmulationScheduler *Scheduler = new EmulationScheduler();
 
-	QualityEvaluator *Evaluator = new QualityEvaluator();
-
 	Scheduler->Init();
 
 	Scheduler->Routine(portno,host);
 
-	
+
 	return 0;
 
 }

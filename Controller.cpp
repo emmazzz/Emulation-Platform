@@ -66,6 +66,14 @@ void Controller::ListenToUser(int portno){
             break;
         }
         msg[n] = 0;
+        const char *q = "Quality";
+        if (strncmp(q, msg, strlen(q)) == 0){
+            bzero(buffer,256);
+            bzero(msg,256);
+            write(connfd,"Quality score received!\n",24);
+            close(connfd);
+            continue;
+        }
         printf("Controller received: %s\n", msg);
     	
     	// UpdateQuality();
@@ -77,7 +85,7 @@ void Controller::ListenToUser(int portno){
 
         // clear buffer     
         bzero(buffer,256);
-
+        bzero(msg,256);
      	close(connfd);
     }
   
