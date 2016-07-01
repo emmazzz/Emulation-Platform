@@ -62,6 +62,8 @@ class User{
 public:
 	std::string User_ID;
 	std::string CDN;
+	std::string city;
+	int bitRate;
 	std::vector<float> Timestamps;
 	float CurTime;
 	float TimePeriod;
