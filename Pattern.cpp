@@ -3,12 +3,7 @@
 void Pattern::GetUserRequests(char *t)
 {	
 	// parse user requests to RequestList from command line arguments?
-	// UserFeature *r1 = new UserFeature();
-	// r1->User_ID = "Emma";
-	// r1->Timestamp = 0;
-	// r1->CDN = "Akamai";
-	// this->RequestList.push_back(*r1);
-
+	
 	float timestamp;
 
 	FILE *trace = fopen(t,"r");
@@ -17,18 +12,52 @@ void Pattern::GetUserRequests(char *t)
 		fprintf(stderr,"wrong file!\n");
 		exit(0);
 	}
-    char *ID = (char *)malloc(sizeof(char));
-    char *CDN = (char *)malloc(sizeof(char));
 
-	while (fscanf(trace, " %s %f %s", ID,&timestamp, CDN) > 0){
-		UserFeature *r1 = new UserFeature();
-		// printf("Feature: %s %f %s\n",ID, timestamp,CDN);
-		r1->User_ID = ID;
-		r1->Timestamp = timestamp;
-		r1->CDN = CDN;
-		this->RequestList.push_back(*r1);
-	}
+	char *feature1 = (char *)malloc(sizeof(char));
+	char *feature2 = (char *)malloc(sizeof(char));
+	char *feature3 = (char *)malloc(sizeof(char));
+	char *decisionAndQuality = (char *)malloc(sizeof(char));
+ //    char *ID = (char *)malloc(sizeof(char));
+ //    char *CDN = (char *)malloc(sizeof(char));
 
+	// while (fscanf(trace, " %s %f %s", ID,&timestamp, CDN) > 0){
+	// 	UserFeature *r1 = new UserFeature();
+	// 	// printf("Feature: %s %f %s\n",ID, timestamp,CDN);
+	// 	r1->User_ID = ID;
+	// 	r1->Timestamp = timestamp;
+	// 	r1->CDN = CDN;
+	// 	this->RequestList.push_back(*r1);
+	// }
+	char buffer[256];
+	char line [1000];
+	char *b = (char *)malloc(sizeof(char));
+	char *decision = (char *)malloc(sizeof(char));
+	float quality;
+    while(fgets(line,sizeof line,trace)!= NULL){
+      sscanf(line,"%s %s %s",feature1,feature2,feature3);
+      snprintf(buffer, sizeof(buffer),"Features are: %s %s %s\n", feature1,feature2,feature3);
+      decisionAndQuality = strstr(line,"|")+2;
+      printf("Features are: %s %s %s\n", feature1,feature2,feature3);
+	  printf("Decisions are : %s\n", decisionAndQuality);
+	  while (sscanf(decisionAndQuality,"%s,%f",decision,&quality) > 0){
+	  	// decisionAndQuality += n;
+	  	// b = strstr(decisionAndQuality,",");
+	  	// sscanf(b,"%f",&quality);
+	    int n = sprintf(b,"%s,%f",decision,quality);
+
+	  	decisionAndQuality += n;
+	  	// printf("%s\n", decisionAndQuality);
+	  	printf("decision is : %s and quality is %f \n",decision,quality );
+	  }
+    }
+
+	// while (fscanf(trace,"%s %s %s | %s", feature1,feature2,feature3,decisionAndQuality) > 0){
+		
+	// }
+	// free(feature1);
+	// free(feature2);
+	// free(feature3);
+	// free(decisionAndQuality);
 	fclose(trace);
 	printf("User requests received\n");
 }
