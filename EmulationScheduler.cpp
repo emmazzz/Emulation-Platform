@@ -68,14 +68,16 @@ void EmulationScheduler::Routine(int portno, char *host)
         getline(dqss,q,',');
         buffers.append(d);
         buffers.append("\t");
-        char *decision = (char *)d.c_str();
+        // char *decision = (char *)malloc(sizeof(char));
+        // string decision = (char *)d.c_str();
         sscanf((char *)q.c_str(),"%f",&quality);
         printf("decision %s\n",decision);
         printf("quality %f\n", quality);
 
         Decision *dec = new Decision();
         dec->quality = quality;
-        dec->decision = decision;
+        dec->decision = d;
+        printf("DEC %s QUA %f\n",decision,quality );
         DecisionList.push_back(*dec);
 
 
@@ -83,11 +85,11 @@ void EmulationScheduler::Routine(int portno, char *host)
       b = (char *)buffers.c_str();
       printf("%s\n", b);
       printf("host is %s\n",host );
-      RequestDecision(b, portno,host);
+      RequestDecision(b, portno,host,DecisionList);
 
       printf("ENDLOOP\n\n\n\n\n\n");
 
-      bzero(b,1000);
+      // bzero(b,1000);
 
       // while (strlen(decisionAndQuality) > 0){
       //   // decisionAndQuality += n;
@@ -129,7 +131,7 @@ void EmulationScheduler::Routine(int portno, char *host)
 
 };
 	
-void EmulationScheduler::RequestDecision(char *buffer, int portno, char *host)
+void EmulationScheduler::RequestDecision(char *buffer, int portno, char *host,std::vector<Decision> DecisionList)
 {
 	int socketfd, n,userlen;
     struct sockaddr_in user_addr;
@@ -195,8 +197,25 @@ void EmulationScheduler::RequestDecision(char *buffer, int portno, char *host)
     printf("Received : %s\n", buffer);
 
     // n=sscanf(buffer, "%f %s",&Timestamp,CDN);
-
+    float score;
+    int found = 0;
+    for (std::vector<Decision>::iterator curd = DecisionList.begin();
+        curd != DecisionList.end();++curd)
+    {
+        printf("%s %s %f\n",curd->decision.c_str() ,buffer, curd->quality);
+        if (!strncmp(curd->decision.c_str(),buffer,10)){
+            score = curd->quality;
+            found = 1;
+            break;
+        }
+        // if (!User_ID.compare(u->User_ID)){
+        //     // *user = *u;
+        //     u->Timestamps.push_back(t);
+        //     return true;
+        // }
+    }
     
+
     UserFeature *decision = new UserFeature();
     // decision->User_ID = User_ID;
     // decision->Timestamp = Timestamp;
@@ -207,14 +226,18 @@ void EmulationScheduler::RequestDecision(char *buffer, int portno, char *host)
     Quality *quality = Evaluator->EvaluateQuality(decision);
     int q = quality->score;
 
-
-    sprintf(msg, "Quality score for decision \n");
+    if (found){
+        sprintf(msg, "Quality score for decision %f \n",score);
+ 
+    } else{
+        sprintf(msg,"Quality score unavailable!\n");
+    }
 
     n = write(socketfd,msg,sizeof(msg)+1);
 
     printf("Message '%s' sent\n",msg );
 
-
+    bzero(msg,256);
     close(socketfd);
 };
     

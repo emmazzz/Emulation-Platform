@@ -11,23 +11,23 @@
 // }
 using namespace std; 
 
-char *Controller::parseMessage(char *msg){
-    char *possibleDecisions = strstr(msg,"|");
-    int count;
-    string pdsting = possibleDecisions;
-    stringstream ss(pdsting);
-    string d;
-    char *dc;
-    while(getline(ss,d,'\t')){
-        dc = (char *)d.c_str();
-        msg = dc;
-        printf("msg is now %s\n", msg);
-        printf("%s\n", dc);
-    }
+// char *Controller::parseMessage(char *msg){
+//     char *possibleDecisions = strstr(msg,"|");
+//     int count;
+//     string pdsting = possibleDecisions;
+//     stringstream ss(pdsting);
+//     string d;
+//     char *dc;
+//     while(getline(ss,d,'\t')){
+//         dc = (char *)d.c_str();
+//         msg = dc;
+//         printf("msg is now %s\n", msg);
+//         printf("%s\n", dc);
+//     }
     
-    return msg;
+//     return msg;
 
-}
+// }
 
 void Controller::ListenToUser(int portno){
 
@@ -75,7 +75,7 @@ void Controller::ListenToUser(int portno){
     	printf("Controller: connection from %s port %d\n",
           	inet_ntoa(user_addr.sin_addr), ntohs(user_addr.sin_port));
     	
-        char *msg;
+        char *msg = (char *)malloc(sizeof(char));
     	n = read(connfd,msg,255);
     	
     	if (n < 0) {
@@ -98,20 +98,22 @@ void Controller::ListenToUser(int portno){
         // char *decision = parseMessage(msg);
 
 
+        char *possibleDecisions = (char *)malloc(sizeof(char));
 
+        possibleDecisions = strstr(msg,"|")+2;
+        int count;
+        string pdsting = possibleDecisions;
+        stringstream ss(pdsting);
+        string d;
+        char *dc = (char *)malloc(sizeof(char));
+        while(getline(ss,d,'\t')){
+            if (strlen(d.c_str()) < 4) continue;
 
-
-        char *possibleDecisions = strstr(msg,"|");
-    int count;
-    string pdsting = possibleDecisions;
-    stringstream ss(pdsting);
-    string d;
-    char *dc;
-    while(getline(ss,d,'\t')){
-        dc = (char *)d.c_str();
-        msg = dc;
-        printf("msg is now %s\n", msg);
-        printf("%s\n", dc);
+            dc = (char *)d.c_str();
+            // msg = dc;
+            sprintf(buffer,"%s\n", dc);
+            printf("%s\n", buffer);
+            // printf("ye\n");
     }
     
     // return msg;
@@ -120,18 +122,20 @@ void Controller::ListenToUser(int portno){
 
 
 
-    	bzero(buffer,256);
+    	// bzero(buffer,256);
     	// UpdateQuality();
         // printf("%s\n", decision);
-    	sprintf(buffer, "Decision: %s", msg);
-
+        // printf("NOW dc %s\n", dc);
+    	// sprintf(buffer, "Decision: %s", dc);
+        printf("sending %s\n", buffer);
     	
     	// send dicision
         write(connfd,buffer,256);
 
         // clear buffer     
         bzero(buffer,256);
-        bzero(msg,256);
+        bzero(dc,256);
+        // bzero(msg,256);
      	close(connfd);
     }
   

@@ -14,11 +14,12 @@
 #include <algorithm>
 
 // float TIMEPERIOD = 1.0;
+using namespace std; 
 
 class Decision{
 public:
 
-	char *decision;
+	string decision;
 	float quality;
 };
 
@@ -101,7 +102,7 @@ public:
 	QualityEvaluator *Evaluator;
 	void Init(char *t);
 	void Routine(int portno, char *host);
-	void RequestDecision(char *b,int portno, char *host);
+	void RequestDecision(char *b,int portno, char *host,std::vector<Decision> DecisionLis);
 };
 
 class EmulationPlatform{
