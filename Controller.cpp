@@ -9,7 +9,26 @@
 // {
 
 // }
+using namespace std; 
+
+char *Controller::parseMessage(char *msg){
+    char *possibleDecisions = strstr(msg,"|");
+    int count;
+    string pdsting = possibleDecisions;
+    stringstream ss(pdsting);
+    string d;
+    char *dc;
+    while(getline(ss,d,'\t')){
+        dc = (char *)d.c_str();
+        msg = dc;
+        printf("msg is now %s\n", msg);
+        printf("%s\n", dc);
+    }
     
+    return msg;
+
+}
+
 void Controller::ListenToUser(int portno){
 
 	// start listening to user
@@ -56,7 +75,7 @@ void Controller::ListenToUser(int portno){
     	printf("Controller: connection from %s port %d\n",
           	inet_ntoa(user_addr.sin_addr), ntohs(user_addr.sin_port));
     	
-        char msg[256];
+        char *msg;
     	n = read(connfd,msg,255);
     	
     	if (n < 0) {
@@ -75,9 +94,36 @@ void Controller::ListenToUser(int portno){
             continue;
         }
         printf("Controller received: %s\n", msg);
+
+        // char *decision = parseMessage(msg);
+
+
+
+
+
+        char *possibleDecisions = strstr(msg,"|");
+    int count;
+    string pdsting = possibleDecisions;
+    stringstream ss(pdsting);
+    string d;
+    char *dc;
+    while(getline(ss,d,'\t')){
+        dc = (char *)d.c_str();
+        msg = dc;
+        printf("msg is now %s\n", msg);
+        printf("%s\n", dc);
+    }
+    
+    // return msg;
+
+
+
+
+
     	bzero(buffer,256);
     	// UpdateQuality();
-    	sprintf(buffer, "Decision CDN: %s", msg);
+        // printf("%s\n", decision);
+    	sprintf(buffer, "Decision: %s", msg);
 
     	
     	// send dicision

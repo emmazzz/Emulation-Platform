@@ -34,15 +34,24 @@ void Pattern::GetUserRequests(char *t)
 	char *decision = (char *)malloc(sizeof(char));
 	float quality;
     while(fgets(line,sizeof line,trace)!= NULL){
+
       sscanf(line,"%s %s %s",feature1,feature2,feature3);
+
       snprintf(buffer, sizeof(buffer),"Features are: %s %s %s\n", feature1,feature2,feature3);
-      decisionAndQuality = strstr(line,"|")+2;
+
+      decisionAndQuality = strstr(line,"|")+1;
+
       printf("Features are: %s %s %s\n", feature1,feature2,feature3);
 	  printf("Decisions are : %s\n", decisionAndQuality);
-	  while (sscanf(decisionAndQuality,"%s,%f",decision,&quality) > 0){
+
+	  while (sscanf(decisionAndQuality,"%s",decision) > 0){
 	  	// decisionAndQuality += n;
-	  	// b = strstr(decisionAndQuality,",");
-	  	// sscanf(b,"%f",&quality);
+	  	b = strstr(decision,",")+1;
+
+	  	printf("decisionAndQuality+b: %s\n",b);
+	  	sscanf(b,"%f",&quality);
+	  	b -= 1;
+	  	*b = '\0';
 	    int n = sprintf(b,"%s,%f",decision,quality);
 
 	  	decisionAndQuality += n;
@@ -77,21 +86,21 @@ void Pattern::InitPattern(char *t)
 	GetUserRequests(t);
 
 	// use request list to initilize all the users
-    // printf("yay\n");
-    for (std::vector<UserFeature>::iterator feature = 
-    	RequestList.begin();feature != RequestList.end();++feature)
-    {
-    	User *user = new User();
-    	if (!GetUserByID(feature->User_ID,feature->Timestamp)){
-        	user->User_ID = feature->User_ID;
-        	// printf("Feature time %f\n",(feature->Timestamp) );
-        	user->Timestamps.push_back(feature->Timestamp);
-        	user->TimePeriod = 0.1;
-        	user->CDN = feature->CDN;
-        	UserList.push_back(*user);
-    	} 
+ //    printf("yay\n");
+ //    for (std::vector<UserFeature>::iterator feature = 
+ //    	RequestList.begin();feature != RequestList.end();++feature)
+ //    {
+ //    	User *user = new User();
+ //    	if (!GetUserByID(feature->User_ID,feature->Timestamp)){
+ //        	user->User_ID = feature->User_ID;
+ //        	// printf("Feature time %f\n",(feature->Timestamp) );
+ //        	user->Timestamps.push_back(feature->Timestamp);
+ //        	user->TimePeriod = 0.1;
+ //        	user->CDN = feature->CDN;
+ //        	UserList.push_back(*user);
+ //    	} 
         
-    }
+ //    }
 
 }
 	

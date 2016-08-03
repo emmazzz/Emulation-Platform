@@ -18,9 +18,8 @@
 class Decision{
 public:
 
-	char *CDN;
-	int bitRate;
-	float Timestamp;
+	char *decision;
+	float quality;
 };
 
 class Quality{
@@ -56,6 +55,7 @@ public:
     	                  std::vector<Quality> QualityVector);
    
     void ListenToUser(int portno);
+    char *parseMessage(char *msg);
 };
 
 class User{
@@ -96,11 +96,12 @@ public:
 	Controller *controller;
 	Pattern *pattern;
 	Decision *Default;
-	std::vector<UserFeature> DecisionList;
+	FILE *trace;
+	
 	QualityEvaluator *Evaluator;
 	void Init(char *t);
 	void Routine(int portno, char *host);
-	void RequestDecision(User *user,int portno, char *host);
+	void RequestDecision(char *b,int portno, char *host);
 };
 
 class EmulationPlatform{
